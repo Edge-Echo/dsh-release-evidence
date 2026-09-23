@@ -24,6 +24,10 @@ inputs:
     description: dsh-testkit suite to run (quick or full)
     required: false
     default: quick
+  plugin-source:
+    description: What dsh-test should install and exercise (a tarball, a package spec, or a directory)
+    required: false
+    default: '.'
   run-testkit:
     description: Run the dsh-testkit lifecycle gate before packing
     required: false
@@ -57,6 +61,7 @@ runs:
     - name: Install the evidence toolchain
       shell: bash
       run: |
+        # Installed rather than fetched per step so npx resolves the same binary every time.
         npm install --no-save dsh-release-evidence@^0.1.0
         if [ "${{ inputs.run-testkit }}" = "true" ]; then
           npm install --no-save dsh-testkit@^0.4.4
@@ -66,15 +71,25 @@ runs:
       if: inputs.run-testkit == 'true'
       shell: bash
       run: |
+        # dsh-test takes the plugin source positionally: `dsh-test [plugin-source] [directory]`.
+        # Omitting it exits 2 with "plugin source is required", which is invalid input, not a
+        # lifecycle failure — so the run continues but the pack ends up incomplete.
+        #
         # Exit codes are meaningful: 0 passed, 1 lifecycle failure, 3 infrastructure.
-        # A lifecycle failure must fail the job; infrastructure trouble is reported but
-        # does not masquerade as a passing gate because the pack will be incomplete.
+        # A lifecycle failure must fail the job; infrastructure trouble does not masquerade
+        # as a passing gate, because the pack will then report missing lifecycle evidence.
         set +e
-        npx dsh-test --suite "${{ inputs.suite }}" ${{ inputs.dsh-version && format('--dsh {0}', inputs.dsh-version) || '' }}
+        npx --yes dsh-test@^0.4.4 --suite "${{ inputs.suite }}" \
+          ${{ inputs.dsh-version && format('--dsh {0}', inputs.dsh-version) || '' }} \
+          "${{ inputs.plugin-source }}"
         code=$?
         set -e
         echo "dsh-test exited $code"
         if [ "$code" = "1" ]; then exit 1; fi
+        if [ "$code" = "2" ]; then
+          echo "::error::dsh-test rejected its input (exit 2). Check plugin-source and dsh-version."
+          exit 1
+        fi
 
     - name: Write the signing key
       if: inputs.signing-key != ''
@@ -88,7 +103,7 @@ runs:
       id: pack
       shell: bash
       run: |
-        npx dsh-evidence pack \
+        npx --yes dsh-release-evidence@^0.1.0 pack \
           --out .dsh-evidence \
           --expires-days "${{ inputs.expires-days }}" \
           --pack-tarball \
@@ -102,7 +117,7 @@ runs:
     - name: Verify the pack as a third party would
       shell: bash
       run: |
-        npx dsh-evidence verify .dsh-evidence \
+        npx --yes dsh-release-evidence@^0.1.0 verify .dsh-evidence \
           ${{ inputs.require-complete == 'true' && '--require-complete' || '' }}
 
     - name: Upload the pack
