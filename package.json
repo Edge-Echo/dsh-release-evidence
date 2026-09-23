@@ -41,8 +41,9 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "test": "node --test --test-timeout=30000 \"tests/*.test.mjs\"",
-    "verify": "node scripts/verify.mjs",
-    "check": "npm run build && npm run test && npm run verify"
+    "verify": "node scripts/check-action.mjs action.yml && node scripts/verify.mjs",
+    "check": "npm run build && npm run test && npm run verify",
+    "check:action": "node scripts/check-action.mjs action.yml"
   },
   "dependencies": {
     "@edge-echo/dsh-ledger": "^0.2.0"

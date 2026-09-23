@@ -1,9 +1,14 @@
-// The release gate a plugin author drops into a workflow.
-//
-// It runs the evidence-producing tools that are installed, packs whatever reports they
-// wrote into one signed artifact, and fails the job when required evidence is missing.
-// The pack is uploaded so a reviewer — or a marketplace — can verify it later without
-// trusting this workflow or the machine it ran on.
+# The release gate a plugin author drops into a workflow.
+#
+# It runs the evidence-producing tools that are installed, packs whatever reports they
+# wrote into one signed artifact, and fails the job when required evidence is missing.
+# The pack is uploaded so a reviewer — or a marketplace — can verify it later without
+# trusting this workflow or the machine it ran on.
+#
+# Note for anyone editing this file: YAML comments start with `#`, not `//`. A `//`
+# header makes the whole manifest unparseable, and GitHub reports it as
+# "Mapping values are not allowed in this context" at the first real key — which is
+# how this file failed its first real run.
 name: DSH release evidence
 description: Pack a DSH plugin's release evidence into one signed, verifiable artifact
 author: Edge-Echo
