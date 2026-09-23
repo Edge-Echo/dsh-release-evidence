@@ -111,3 +111,7 @@ runs:
         name: dsh-release-evidence
         path: .dsh-evidence/
         if-no-files-found: error
+        # The default output directory is dot-prefixed, and upload-artifact v4 skips
+        # hidden files unless this is set. Without it the pack is built, verified, and
+        # then silently not uploaded - which is how the first green-looking run failed.
+        include-hidden-files: true
