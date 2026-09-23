@@ -100,7 +100,7 @@ year-old report does not become current by being packed.
 ### GitHub Action
 
 ```yaml
-- uses: Edge-Echo/dsh-release-evidence@main
+- uses: Edge-Echo/dsh-release-evidence@v0.2.0
   with:
     dsh-version: '0.15.3'
     suite: full

@@ -1,6 +1,6 @@
 {
   "name": "dsh-release-evidence",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Aggregate DSH plugin release evidence (lifecycle tests, regression evals, compatibility, quality budgets) into one signed, independently verifiable pack. Does not run the tests — proves which ones ran and that their reports were not altered.",
   "type": "module",
   "license": "MIT",
