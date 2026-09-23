@@ -79,9 +79,7 @@ runs:
         # A lifecycle failure must fail the job; infrastructure trouble does not masquerade
         # as a passing gate, because the pack will then report missing lifecycle evidence.
         set +e
-        BIN=node_modules/.bin/dsh-test
-        [ -x "$BIN" ] || BIN="npx --yes --package=dsh-testkit@^0.4.4 dsh-test"
-        $BIN --suite "${{ inputs.suite }}" \
+        npx --yes --package=dsh-testkit@^0.4.4 dsh-test --suite "${{ inputs.suite }}" \
           ${{ inputs.dsh-version && format('--dsh {0}', inputs.dsh-version) || '' }} \
           "${{ inputs.plugin-source }}"
         code=$?
@@ -105,7 +103,7 @@ runs:
       id: pack
       shell: bash
       run: |
-        node_modules/.bin/dsh-evidence pack \
+        npx --yes --package=dsh-release-evidence@^0.1.0 dsh-evidence pack \
           --out .dsh-evidence \
           --expires-days "${{ inputs.expires-days }}" \
           --pack-tarball \
@@ -119,7 +117,7 @@ runs:
     - name: Verify the pack as a third party would
       shell: bash
       run: |
-        node_modules/.bin/dsh-evidence verify .dsh-evidence \
+        npx --yes --package=dsh-release-evidence@^0.1.0 dsh-evidence verify .dsh-evidence \
           ${{ inputs.require-complete == 'true' && '--require-complete' || '' }}
 
     - name: Upload the pack
