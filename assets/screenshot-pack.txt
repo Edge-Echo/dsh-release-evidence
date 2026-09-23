@@ -1,0 +1,18 @@
+packed 3 artifact(s) from 6 scanned file(s)
+  subject        : dsh-driftwatch@0.1.1 (b149219)
+  evidence root  : e117cc029c4caee6d5cc65be4e7fcacf5c171e837313d59e5f96b8cb626c1948
+  signed         : yes (Ed25519)
+  complete       : true
+  wrote .dsh-evidence/evidence.json
+  wrote .dsh-evidence/EVIDENCE.md
+
+$ dsh-evidence verify .dsh-evidence --require-complete
+subject: dsh-driftwatch@0.1.1
+verification: OK
+  complete=true signature=true digests=true root=true stale=false
+  signer key: MCowBQYDK2VwAyEAmZCXEgGnM8ZfEJPF...
+
+$ # tamper one report, then verify again
+$ dsh-evidence verify .dsh-evidence --require-complete
+verification: NOT OK
+  issue: artifact changed since it was packed: .dsh-testkit/runs/.../junit.xml

@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640" role="img" aria-label="dsh-release-evidence — one verifiable artifact per release">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b1220"/>
+      <stop offset="55%" stop-color="#082430"/>
+      <stop offset="100%" stop-color="#0b1220"/>
+    </linearGradient>
+    <linearGradient id="brand" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0ea5e9"/>
+      <stop offset="100%" stop-color="#38bdf8"/>
+    </linearGradient>
+    <linearGradient id="chip" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0f1f2e"/>
+      <stop offset="100%" stop-color="#0c1a28"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="75%" cy="20%" r="65%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="15%" cy="90%" r="55%">
+      <stop offset="0%" stop-color="#0ea5e9" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#0ea5e9" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1280" height="640" fill="url(#bg)"/>
+  <rect width="1280" height="640" fill="url(#glow)"/>
+  <rect width="1280" height="640" fill="url(#glow2)"/>
+  <g fill="#ffffff" opacity="0.05">
+    <circle cx="60" cy="60" r="3"/><circle cx="180" cy="60" r="3"/><circle cx="300" cy="60" r="3"/><circle cx="420" cy="60" r="3"/><circle cx="540" cy="60" r="3"/><circle cx="660" cy="60" r="3"/><circle cx="780" cy="60" r="3"/><circle cx="900" cy="60" r="3"/><circle cx="1020" cy="60" r="3"/><circle cx="1140" cy="60" r="3"/><circle cx="60" cy="180" r="3"/><circle cx="180" cy="180" r="3"/><circle cx="300" cy="180" r="3"/><circle cx="420" cy="180" r="3"/><circle cx="540" cy="180" r="3"/><circle cx="660" cy="180" r="3"/><circle cx="780" cy="180" r="3"/><circle cx="900" cy="180" r="3"/><circle cx="1020" cy="180" r="3"/><circle cx="1140" cy="180" r="3"/><circle cx="60" cy="300" r="3"/><circle cx="180" cy="300" r="3"/><circle cx="300" cy="300" r="3"/><circle cx="1020" cy="300" r="3"/><circle cx="1140" cy="300" r="3"/><circle cx="60" cy="420" r="3"/><circle cx="180" cy="420" r="3"/><circle cx="300" cy="420" r="3"/><circle cx="1020" cy="420" r="3"/><circle cx="1140" cy="420" r="3"/><circle cx="60" cy="540" r="3"/><circle cx="180" cy="540" r="3"/><circle cx="300" cy="540" r="3"/><circle cx="420" cy="540" r="3"/><circle cx="540" cy="540" r="3"/><circle cx="660" cy="540" r="3"/><circle cx="780" cy="540" r="3"/><circle cx="900" cy="540" r="3"/><circle cx="1020" cy="540" r="3"/><circle cx="1140" cy="540" r="3"/>
+  </g>
+
+  <!-- motif: a shield over evidence branches -->
+
+  <g transform="translate(1000 96)">
+    <path d="M 60 0 L 120 24 V 78 C 120 122 92 152 60 168 C 28 152 0 122 0 78 V 24 Z"
+          fill="none" stroke="#38bdf8" stroke-opacity="0.55" stroke-width="3"/>
+    <path d="M 60 22 L 100 38 V 78 C 100 108 82 130 60 142 C 38 130 20 108 20 78 V 38 Z"
+          fill="#0ea5e9" fill-opacity="0.14"/>
+    <path d="M 38 84 l 16 16 l 30 -34" fill="none" stroke="#0ea5e9" stroke-width="7"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g stroke="#38bdf8" stroke-opacity="0.45" stroke-width="2" fill="none">
+    <path d="M 830 250 L 900 250 M 900 250 L 900 200 M 900 200 L 970 200"/>
+    <path d="M 830 250 L 900 250 M 900 250 L 900 300 M 900 300 L 970 300"/>
+  </g>
+  <g fill="#0ea5e9">
+    <circle cx="970" cy="200" r="7" fill-opacity="0.85"/>
+    <circle cx="970" cy="300" r="7" fill-opacity="0.85"/>
+    <circle cx="830" cy="250" r="9"/>
+  </g>
+  <text x="848" y="345" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="21" font-weight="700" fill="#0ea5e9" opacity="0.85">evidence</text>
+  <circle cx="110" cy="480" r="34" fill="none" stroke="#0ea5e9" stroke-opacity="0.2" stroke-width="2"/>
+  <circle cx="110" cy="480" r="56" fill="none" stroke="#0ea5e9" stroke-opacity="0.12" stroke-width="1.5"/>
+  <circle cx="110" cy="480" r="80" fill="none" stroke="#0ea5e9" stroke-opacity="0.07" stroke-width="1"/>
+
+  <!-- logo tile -->
+  <rect x="72" y="64" width="96" height="96" rx="24" fill="url(#brand)"/>
+
+  <g fill="#ffffff" opacity="0.95">
+    <rect x="100" y="94" width="30" height="8" rx="4"/>
+    <rect x="100" y="108" width="22" height="8" rx="4" opacity="0.75"/>
+    <rect x="100" y="122" width="26" height="8" rx="4" opacity="0.6"/>
+  </g>
+  <path d="M 138 100 l 0 34" stroke="#ffffff" stroke-opacity="0.6" stroke-width="2.5"/>
+  <path d="M 130 128 l 8 10 l 8 -10" fill="none" stroke="#ffffff" stroke-opacity="0.9" stroke-width="3"
+        stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="104" y="142" width="30" height="8" rx="4" fill="#0b1220" opacity="0.85"/>
+
+  <text x="72" y="316" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="72" font-weight="800" fill="#f8fafc" letter-spacing="0">dsh-release-evidence</text>
+  <text x="72" y="374" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="29" font-weight="500" fill="#94a3b8">One verifiable artifact per release — it does not run your tests</text>
+<g font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="20" font-weight="600">
+    <rect x="72" y="496" width="214" height="52" rx="26" fill="url(#chip)" stroke="#075985" stroke-width="1.5"/>
+    <text x="179" y="529" text-anchor="middle" fill="#7dd3fc">lifecycle gate</text>
+    <rect x="302" y="496" width="225" height="52" rx="26" fill="url(#chip)" stroke="#075985" stroke-width="1.5"/>
+    <text x="414.5" y="529" text-anchor="middle" fill="#7dd3fc">regression eval</text>
+    <rect x="543" y="496" width="203" height="52" rx="26" fill="url(#chip)" stroke="#075985" stroke-width="1.5"/>
+    <text x="644.5" y="529" text-anchor="middle" fill="#7dd3fc">compatibility</text>
+    <rect x="762" y="496" width="181" height="52" rx="26" fill="url(#chip)" stroke="#075985" stroke-width="1.5"/>
+    <text x="852.5" y="529" text-anchor="middle" fill="#7dd3fc">Merkle root</text>
+    <rect x="959" y="496" width="137" height="52" rx="26" fill="url(#chip)" stroke="#075985" stroke-width="1.5"/>
+    <text x="1027.5" y="529" text-anchor="middle" fill="#7dd3fc">Ed25519</text>
+    <rect x="72" y="562" width="132" height="52" rx="26" fill="url(#chip)" stroke="#075985" stroke-width="1.5"/>
+    <text x="138" y="595" text-anchor="middle" fill="#7dd3fc">verify</text>
+  </g>
+</svg>
