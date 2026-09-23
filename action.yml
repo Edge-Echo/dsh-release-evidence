@@ -1,0 +1,108 @@
+// The release gate a plugin author drops into a workflow.
+//
+// It runs the evidence-producing tools that are installed, packs whatever reports they
+// wrote into one signed artifact, and fails the job when required evidence is missing.
+// The pack is uploaded so a reviewer — or a marketplace — can verify it later without
+// trusting this workflow or the machine it ran on.
+name: DSH release evidence
+description: Pack a DSH plugin's release evidence into one signed, verifiable artifact
+author: Edge-Echo
+branding:
+  icon: shield
+  color: green
+
+inputs:
+  dsh-version:
+    description: Exact DSH version to test against
+    required: false
+  suite:
+    description: dsh-testkit suite to run (quick or full)
+    required: false
+    default: quick
+  run-testkit:
+    description: Run the dsh-testkit lifecycle gate before packing
+    required: false
+    default: 'true'
+  signing-key:
+    description: Ed25519 private key (PEM) used to sign the pack; unsigned when omitted
+    required: false
+  expires-days:
+    description: Days after which the pack should be treated as stale
+    required: false
+    default: '30'
+  require-complete:
+    description: Fail when required evidence (lifecycle test, packed artifact) is absent
+    required: false
+    default: 'true'
+
+outputs:
+  pack-path:
+    description: Directory holding evidence.json and EVIDENCE.md
+    value: ${{ steps.pack.outputs.pack-path }}
+  evidence-root:
+    description: Merkle root over the evidence digests
+    value: ${{ steps.pack.outputs.evidence-root }}
+  verified:
+    description: Whether the pack verified immediately after being built
+    value: ${{ steps.pack.outputs.verified }}
+
+runs:
+  using: composite
+  steps:
+    - name: Install the evidence toolchain
+      shell: bash
+      run: |
+        npm install --no-save dsh-release-evidence@^0.1.0
+        if [ "${{ inputs.run-testkit }}" = "true" ]; then
+          npm install --no-save dsh-testkit@^0.4.4
+        fi
+
+    - name: Run the lifecycle gate
+      if: inputs.run-testkit == 'true'
+      shell: bash
+      run: |
+        # Exit codes are meaningful: 0 passed, 1 lifecycle failure, 3 infrastructure.
+        # A lifecycle failure must fail the job; infrastructure trouble is reported but
+        # does not masquerade as a passing gate because the pack will be incomplete.
+        set +e
+        npx dsh-test --suite "${{ inputs.suite }}" ${{ inputs.dsh-version && format('--dsh {0}', inputs.dsh-version) || '' }}
+        code=$?
+        set -e
+        echo "dsh-test exited $code"
+        if [ "$code" = "1" ]; then exit 1; fi
+
+    - name: Write the signing key
+      if: inputs.signing-key != ''
+      shell: bash
+      run: |
+        KEY_FILE="$RUNNER_TEMP/evidence-key.pem"
+        printf '%s' "${{ inputs.signing-key }}" > "$KEY_FILE"
+        echo "EVIDENCE_KEY=$KEY_FILE" >> "$GITHUB_ENV"
+
+    - name: Pack the evidence
+      id: pack
+      shell: bash
+      run: |
+        npx dsh-evidence pack \
+          --out .dsh-evidence \
+          --expires-days "${{ inputs.expires-days }}" \
+          --pack-tarball \
+          ${{ env.EVIDENCE_KEY && format('--key {0}', env.EVIDENCE_KEY) || '' }}
+        echo "pack-path=.dsh-evidence" >> "$GITHUB_OUTPUT"
+        root=$(node -e "console.log(require('./.dsh-evidence/evidence.json').evidenceRoot)")
+        echo "evidence-root=$root" >> "$GITHUB_OUTPUT"
+        verified=$(node -e "const p=require('./.dsh-evidence/evidence.json');console.log(Boolean(p.signature))")
+        echo "verified=$verified" >> "$GITHUB_OUTPUT"
+
+    - name: Verify the pack as a third party would
+      shell: bash
+      run: |
+        npx dsh-evidence verify .dsh-evidence \
+          ${{ inputs.require-complete == 'true' && '--require-complete' || '' }}
+
+    - name: Upload the pack
+      uses: actions/upload-artifact@v4
+      with:
+        name: dsh-release-evidence
+        path: .dsh-evidence/
+        if-no-files-found: error

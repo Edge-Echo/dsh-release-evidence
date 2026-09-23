@@ -1,0 +1,54 @@
+{
+  "name": "dsh-release-evidence",
+  "version": "0.1.0",
+  "description": "Aggregate DSH plugin release evidence (lifecycle tests, regression evals, compatibility, quality budgets) into one signed, independently verifiable pack. Does not run the tests — proves which ones ran and that their reports were not altered.",
+  "type": "module",
+  "license": "MIT",
+  "author": "dsh-toolkit contributors",
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "dsh-plugin",
+    "release-evidence",
+    "provenance",
+    "attestation",
+    "ci",
+    "merkle",
+    "supply-chain"
+  ],
+  "files": [
+    "lib",
+    "action.yml",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Edge-Echo/dsh-release-evidence.git"
+  },
+  "bin": {
+    "dsh-evidence": "lib/cli.js"
+  },
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "engines": {
+    "node": ">=22"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "node --test --test-timeout=30000 \"tests/*.test.mjs\"",
+    "verify": "node scripts/verify.mjs",
+    "check": "npm run build && npm run test && npm run verify"
+  },
+  "dependencies": {
+    "@edge-echo/dsh-ledger": "^0.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.7.0"
+  }
+}
