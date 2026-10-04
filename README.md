@@ -1,7 +1,14 @@
 # dsh-release-evidence
 
-**One verifiable artifact per release.** It does not run your tests — it proves which
-checks ran, what they concluded, and that their reports have not been altered since.
+**One verifiable artifact per release. It does not run your tests — it proves which checks ran, what they concluded, and that the reports have not been altered since.**
+
+### When you need this
+
+- You publish plugins and want reviewers to verify your test results without trusting your CI
+- A marketplace or a customer asks you to prove the checks really ran
+- You need a third party to be able to check a release, offline, with the artifact alone
+
+Tampering with any single report, reordering entries, rewriting the subject or dropping the signature all fail verification — checked by 13 unit tests and 24 end-to-end CLI checks.
 
 ```
 dsh-evidence pack     # → .dsh-evidence/evidence.json + EVIDENCE.md (+ Ed25519 signature)
@@ -10,8 +17,6 @@ dsh-evidence verify   # → a third party checks it without trusting your CI
 
 [![npm version](https://img.shields.io/npm/v/dsh-release-evidence?color=10b981&logo=npm)](https://www.npmjs.com/package/dsh-release-evidence)
 [![license](https://img.shields.io/badge/license-MIT-6ee7b7)](LICENSE)
-
-> Part of the **dsh-toolkit family**: [dsh-mcp-bridge](https://github.com/Edge-Echo/dsh-mcp-bridge) · [dsh-win-toolkit](https://github.com/Edge-Echo/dsh-win-toolkit) · [dsh-netassist](https://github.com/Edge-Echo/dsh-netassist) · [dsh-driftwatch](https://github.com/Edge-Echo/dsh-driftwatch) · [mcp-netassist](https://github.com/Edge-Echo/mcp-netassist) · [dsh-ledger](https://github.com/Edge-Echo/dsh-ledger) · [dsh-release-evidence](https://github.com/Edge-Echo/dsh-release-evidence)
 
 ---
 
@@ -135,3 +140,16 @@ tree (`RFC 6962`). That is the only runtime dependency, and it has none of its o
 ## License
 
 MIT
+
+## Related
+
+Part of the **dsh-toolkit family** — small, independently useful pieces for
+[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness):
+
+- [dsh-mcp-bridge](https://github.com/Edge-Echo/dsh-mcp-bridge) — install six curated MCP servers, verified in CI
+- [dsh-win-toolkit](https://github.com/Edge-Echo/dsh-win-toolkit) — clipboard, notifications, hosts, port checks on Windows
+- [dsh-netassist](https://github.com/Edge-Echo/dsh-netassist) — network and proxy diagnosis with a concrete next step
+- [dsh-driftwatch](https://github.com/Edge-Echo/dsh-driftwatch) — behaviour-drift reports between two session logs
+- [dsh-ledger](https://github.com/Edge-Echo/dsh-ledger) — what the agent did to your files, provably unaltered
+- [dsh-release-evidence](https://github.com/Edge-Echo/dsh-release-evidence) — one verifiable artifact per release
+- [mcp-netassist](https://github.com/Edge-Echo/mcp-netassist) — the same network checks as an MCP server, any client
